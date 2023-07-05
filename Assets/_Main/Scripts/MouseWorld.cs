@@ -11,12 +11,14 @@ public class MouseWorld : MonoBehaviour
         instance = this;
     }
 
-    public static bool TryGetPosition(out Vector3 position)
+    public static Vector3 GetPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool hitSomethingValid = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.mousePlaneLayerMask);
-        position = raycastHit.point;
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.mousePlaneLayerMask))
+        {
+            return raycastHit.point;
+        }
 
-        return hitSomethingValid;
+        return Vector3.negativeInfinity;
     }
 }
