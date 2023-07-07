@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5295370753839450957}
+  - component: {fileID: 5786739442674983764}
   m_Layer: 0
   m_Name: pfGridDebugObject
   m_TagString: Untagged
@@ -30,8 +31,21 @@ Transform:
   m_Children:
   - {fileID: 1397137067133312968}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5786739442674983764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5608784064777375383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab8e1a447b6394468c7e41f4360fc49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 8222964460429081986}
 --- !u!1 &6226941932620178555
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,8 +173,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 5
-  m_fontSizeBase: 5
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
