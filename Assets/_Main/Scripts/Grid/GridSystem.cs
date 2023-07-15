@@ -35,6 +35,10 @@ public class GridSystem
         return new GridPosition(Mathf.RoundToInt(worldPosition.x / cellSize), Mathf.RoundToInt(worldPosition.z / cellSize));
     }
 
+    public int GetWidth() => width;
+
+    public int GetHeight() => height;
+
     public void CreateDebugObjects(Transform debugPrefab)
     {
         for (int x = 0; x < width; x++)
