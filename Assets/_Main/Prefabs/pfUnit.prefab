@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2567462325549712808}
   - component: {fileID: 7036798517917308374}
   - component: {fileID: 543230973233800787}
+  - component: {fileID: 3682439686954088175}
   m_Layer: 7
   m_Name: pfUnit
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   - {fileID: 2692913285233563902}
   - {fileID: 6010364222533400666}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7036798517917308374
 MonoBehaviour:
@@ -69,6 +70,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1.7, z: 0.5}
   m_Center: {x: 0, y: 0.85, z: 0}
+--- !u!114 &3682439686954088175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228711224843990591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c74ad8b8c4a804184307cd727396ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMoveDistance: 4
 --- !u!1 &7480952139120317627
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ public class UnitActionSystem : MonoBehaviour
             Vector3 worldPosition = MouseWorld.GetPosition();
             if (worldPosition != Vector3.negativeInfinity)
             {
-                selectedUnit.Move(worldPosition);
+                selectedUnit.GetMoveAction().Move(worldPosition);
             }
         }
     }
@@ -56,6 +56,7 @@ public class UnitActionSystem : MonoBehaviour
         if (selectedUnit != unit)
         {
             selectedUnit = unit;
+
             OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
         }
     }
