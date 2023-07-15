@@ -28,10 +28,10 @@ public class UnitActionSystem : MonoBehaviour
         {
             if (TryHandleUnitSelection()) return;
 
-            Vector3 worldPosition = MouseWorld.GetPosition();
-            if (worldPosition != Vector3.negativeInfinity)
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
             {
-                selectedUnit.GetMoveAction().Move(worldPosition);
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
             }
         }
     }

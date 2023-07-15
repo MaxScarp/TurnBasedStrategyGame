@@ -54,4 +54,9 @@ public class GridSystem
     {
         return gridObjectArray[gridPosition.X, gridPosition.Z];
     }
+
+    public bool IsValidGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition.X >= 0 && gridPosition.Z >= 0 && gridPosition.X < width && gridPosition.Z < height;
+    }
 }
