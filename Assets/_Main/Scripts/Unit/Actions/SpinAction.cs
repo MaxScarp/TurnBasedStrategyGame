@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SpinAction : BaseAction
@@ -22,19 +23,21 @@ public class SpinAction : BaseAction
                 return;
             }
 
-            float rotateSpeed = 100f;
-            spinAmountDeg += rotateSpeed * Time.deltaTime;
+            float rotationSpeed = 200f;
+            spinAmountDeg += rotationSpeed * Time.deltaTime;
             transform.rotation = Quaternion.AngleAxis(spinAmountDeg, Vector3.up);
 
             if (spinAmountDeg >= totalSpinAmountDeg + spinRotationOffsetDeg)
             {
                 isActive = false;
+                onActionComplete();
             }
         }
     }
 
-    public void Spin()
+    public void Spin(Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         spinRotationOffsetDeg = transform.rotation.eulerAngles.y >= 0f ? transform.rotation.eulerAngles.y : 360f + transform.rotation.eulerAngles.y;
         spinAmountDeg = transform.rotation.eulerAngles.y;
         isActive = true;
