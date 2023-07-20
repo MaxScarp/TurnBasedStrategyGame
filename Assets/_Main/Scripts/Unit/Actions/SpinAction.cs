@@ -42,4 +42,9 @@ public class SpinAction : BaseAction
         spinAmountDeg = transform.rotation.eulerAngles.y;
         isActive = true;
     }
+
+    public override string GetActionName()
+    {
+        return "Spin";
+    }
 }

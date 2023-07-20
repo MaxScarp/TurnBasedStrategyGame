@@ -77,12 +77,9 @@ public class UnitActionSystem : MonoBehaviour
 
     private void SetSelectedUnit(Unit unit)
     {
-        if (selectedUnit != unit)
-        {
-            selectedUnit = unit;
+        selectedUnit = unit;
 
-            OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
-        }
+        OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public Unit GetSelectedUnit()
