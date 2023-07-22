@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    private const int ACTION_POINTS_MAX = 2;
+
     [SerializeField] private Animator unitAnimator;
 
     private GridPosition gridPosition;
@@ -16,13 +19,20 @@ public class Unit : MonoBehaviour
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
 
-        actionPoints = 2;
+        actionPoints = ACTION_POINTS_MAX;
     }
 
     private void Start()
     {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
+
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+    }
+
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
+    {
+        actionPoints = ACTION_POINTS_MAX;
     }
 
     private void Update()
@@ -68,4 +78,9 @@ public class Unit : MonoBehaviour
     }
 
     public int GetActionPoints() => actionPoints;
+
+    private void OnDestroy()
+    {
+        TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;
+    }
 }
