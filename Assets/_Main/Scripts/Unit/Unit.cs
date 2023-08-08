@@ -85,6 +85,16 @@ public class Unit : MonoBehaviour
 
     public bool GetIsEnemy() => isEnemy;
 
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
+    }
+
+    public void Damage()
+    {
+        Debug.Log($"{transform} damaged!");
+    }
+
     private void OnDestroy()
     {
         TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;

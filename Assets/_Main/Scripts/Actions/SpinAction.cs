@@ -30,18 +30,16 @@ public class SpinAction : BaseAction
 
             if (spinAmountDeg >= totalSpinAmountDeg + spinRotationOffsetDeg)
             {
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
             }
         }
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
         spinRotationOffsetDeg = transform.rotation.eulerAngles.y >= 0f ? transform.rotation.eulerAngles.y : 360f + transform.rotation.eulerAngles.y;
         spinAmountDeg = transform.rotation.eulerAngles.y;
-        isActive = true;
     }
 
     public override List<GridPosition> GetValidActionGridPositionList()
