@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
     private const int ACTION_POINTS_MAX = 2;
 
     [SerializeField] private Animator unitAnimator;
+    [SerializeField] private bool isEnemy;
 
     private GridPosition gridPosition;
     private MoveAction moveAction;
@@ -32,7 +33,10 @@ public class Unit : MonoBehaviour
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
     {
-        actionPoints = ACTION_POINTS_MAX;
+        if ((isEnemy && !TurnSystem.Instance.GetIsPlayerTurn()) || (!isEnemy && TurnSystem.Instance.GetIsPlayerTurn()))
+        {
+            actionPoints = ACTION_POINTS_MAX;
+        }
     }
 
     private void Update()
@@ -78,6 +82,8 @@ public class Unit : MonoBehaviour
     }
 
     public int GetActionPoints() => actionPoints;
+
+    public bool GetIsEnemy() => isEnemy;
 
     private void OnDestroy()
     {
