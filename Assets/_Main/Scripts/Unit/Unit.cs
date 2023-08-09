@@ -5,7 +5,6 @@ public class Unit : MonoBehaviour
 {
     private const int ACTION_POINTS_MAX = 2;
 
-    [SerializeField] private Animator unitAnimator;
     [SerializeField] private bool isEnemy;
 
     private GridPosition gridPosition;
@@ -53,8 +52,6 @@ public class Unit : MonoBehaviour
     public MoveAction GetMoveAction() => moveAction;
 
     public SpinAction GetSpinAction() => spinAction;
-
-    public Animator GetUnitAnimator() => unitAnimator;
 
     public GridPosition GetGridPosition() => gridPosition;
 
