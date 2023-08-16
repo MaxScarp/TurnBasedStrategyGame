@@ -34,11 +34,17 @@ public abstract class BaseAction : MonoBehaviour
     {
         isActive = true;
         this.onActionComplete = onActionComplete;
+
+        ActionsEventDispatcher.OnAnyActionStartedInvoke(this);
     }
 
     protected void ActionComplete()
     {
         isActive = false;
         onActionComplete();
+
+        ActionsEventDispatcher.OnAnyActionCompletedInvoke(this);
     }
+
+    public Unit GetUnit() => unit;
 }
