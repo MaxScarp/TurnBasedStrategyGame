@@ -31,6 +31,8 @@ public class Unit : MonoBehaviour
     private void HealthSystem_OnDead(object sender, EventArgs e)
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        UnitManager.OnAnyUnitDeadInvoke(this);
+
         Destroy(gameObject);
     }
 
@@ -40,6 +42,8 @@ public class Unit : MonoBehaviour
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+
+        UnitManager.OnAnyUnitSpawnedInvoke(this);
     }
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
