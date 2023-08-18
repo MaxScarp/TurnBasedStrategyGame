@@ -11,31 +11,17 @@ public class Unit : MonoBehaviour
 
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
-    private MoveAction moveAction;
-    private SpinAction spinAction;
-    private ShootAction shootAction;
     private BaseAction[] baseActionArray;
     private int actionPoints;
 
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-        moveAction = GetComponent<MoveAction>();
-        spinAction = GetComponent<SpinAction>();
-        shootAction = GetComponent<ShootAction>();
         baseActionArray = GetComponents<BaseAction>();
 
         actionPoints = ACTION_POINTS_MAX;
 
         healthSystem.OnDead += HealthSystem_OnDead;
-    }
-
-    private void HealthSystem_OnDead(object sender, EventArgs e)
-    {
-        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
-        UnitManager.OnAnyUnitDeadInvoke(this);
-
-        Destroy(gameObject);
     }
 
     private void Start()
@@ -46,6 +32,27 @@ public class Unit : MonoBehaviour
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
 
         UnitManager.OnAnyUnitSpawnedInvoke(this);
+    }
+
+    public T GetAction<T>() where T : BaseAction
+    {
+        foreach (BaseAction baseAction in baseActionArray)
+        {
+            if (baseAction is T)
+            {
+                return (T)baseAction;
+            }
+        }
+
+        return null;
+    }
+
+    private void HealthSystem_OnDead(object sender, EventArgs e)
+    {
+        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        UnitManager.OnAnyUnitDeadInvoke(this);
+
+        Destroy(gameObject);
     }
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
@@ -69,12 +76,6 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition);
         }
     }
-
-    public MoveAction GetMoveAction() => moveAction;
-
-    public SpinAction GetSpinAction() => spinAction;
-
-    public ShootAction GetShootAction() => shootAction;
 
     public GridPosition GetGridPosition() => gridPosition;
 
