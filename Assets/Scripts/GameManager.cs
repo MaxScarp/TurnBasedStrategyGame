@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Vector3> unitPositionList;
     [SerializeField] private Vector3 unitWithoutSpinActionPosition;
     [SerializeField] private List<Vector3> enemyPositionList;
+    [SerializeField] private Transform componenetTransformTest;
 
     public static Vector3 MousePosition { get; private set; }
     public static MouseWorld MouseWorld { get; private set; }
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     public static TurnSystemUI TurnSystemUI { get; private set; }
     public static EnemyAI EnemyAI { get; private set; }
     public static UnitManager UnitManager { get; private set; }
+    public static Pathfinding Pathfinding { get; private set; }
 
     private void Awake()
     {
@@ -85,6 +87,10 @@ public class GameManager : MonoBehaviour
             else if (componentTransformInstance.TryGetComponent(out UnitManager unitManager))
             {
                 UnitManager = unitManager;
+            }
+            else if (componentTransformInstance.TryGetComponent(out Pathfinding pathfinding))
+            {
+                Pathfinding = pathfinding;
             }
         }
     }
@@ -144,6 +150,8 @@ public class GameManager : MonoBehaviour
                 Instantiate(enemyTransform, enemyPositionList[i], enemyTransform.rotation);
             }
         }
+
+        Instantiate(componenetTransformTest, transform);
     }
 
     private void Update()

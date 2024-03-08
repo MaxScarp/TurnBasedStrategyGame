@@ -403,6 +403,7 @@ MonoBehaviour:
   - {fileID: 3069180540798264650, guid: 6a4f4e73f8408bb4e93e49810d677e66, type: 3}
   - {fileID: 50724259427665484, guid: 022c5e499c1b960449dc2b2dc715a015, type: 3}
   - {fileID: 3608101151868688134, guid: c94bcd48f0f923343b2f0d23d37d456f, type: 3}
+  - {fileID: 240757615555272644, guid: a887900941ce0194688e2822d7ad55cf, type: 3}
   UIComponentTransformArray:
   - {fileID: 2993944777077932493, guid: 627eddb6e15c5cc40822c071c526e237, type: 3}
   - {fileID: 3701741665206846138, guid: 0aaa1f54298822041adb79c586275a88, type: 3}
@@ -428,6 +429,8 @@ MonoBehaviour:
   enemyPositionList:
   - {x: 8, y: 0, z: 8}
   - {x: 16, y: 0, z: 12}
+  componenetTransformTest: {fileID: 4437940387058894920, guid: 3f3c9238a18a10946b772872b21c528e,
+    type: 3}
 --- !u!4 &320327566
 Transform:
   m_ObjectHideFlags: 0

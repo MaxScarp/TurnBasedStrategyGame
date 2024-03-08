@@ -46,7 +46,7 @@ public class GridSystem<TGridObject>
                     return;
                 }
 
-                gridDebugObject.SetGridObject(GetGridObject(gridPosition) as GridObject);
+                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
             }
         }
     }
