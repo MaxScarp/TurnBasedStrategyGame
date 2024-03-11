@@ -46,3 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridDebugObjectPrefab: {fileID: 21745650094317989, guid: 5946ecad49eb23942ac1dc09e844d880,
     type: 3}
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
