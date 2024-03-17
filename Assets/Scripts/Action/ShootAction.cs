@@ -14,6 +14,7 @@ public class ShootAction : BaseAction
     }
 
     [SerializeField] private int maxShootDistance = 7;
+    [SerializeField] private LayerMask obstacleLayerMask;
 
     private enum State
     {
@@ -29,11 +30,6 @@ public class ShootAction : BaseAction
 
     public Unit TargetUnit { get => targetUnit; }
     public int MaxShootDistance { get => maxShootDistance; }
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     private void Update()
     {
@@ -117,6 +113,11 @@ public class ShootAction : BaseAction
 
                 Unit targetUnit = GameManager.LevelGrid.GetUnitAtGridPosition(testGridPosition);
                 if (targetUnit.IsEnemy == unit.IsEnemy) continue;
+
+                Vector3 unitWorldPosition = GameManager.LevelGrid.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight, shootDir, Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()), obstacleLayerMask)) continue;
 
                 validGridPositionList.Add(testGridPosition);
             }

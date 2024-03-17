@@ -11,36 +11,34 @@ public class MoveAction : BaseAction
 
     [SerializeField] private int maxMoveDistance = 4;
 
-    private Vector3 targetPositon;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        targetPositon = transform.position;
-    }
+    private List<Vector3> positionList;
+    private int currentPositionIndex;
 
     private void Update()
     {
         if (!isActive) return;
 
-        Vector3 moveDirection = (targetPositon - transform.position).normalized;
-
-        float stoppingDistance = 0.1f;
-        if (Vector3.Distance(transform.position, targetPositon) >= stoppingDistance)
-        {
-            float moveSpeed = 4.0f;
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
-            OnStartMoving?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            OnStopMoving?.Invoke(this, EventArgs.Empty);
-            ActionComplete();
-        }
+        Vector3 targetPosition = positionList[currentPositionIndex];
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
         float rotateSpeed = 10.0f;
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+
+        float stoppingDistance = 0.1f;
+        if (Vector3.Distance(transform.position, targetPosition) >= stoppingDistance)
+        {
+            float moveSpeed = 4.0f;
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            currentPositionIndex++;
+            if (currentPositionIndex >= positionList.Count)
+            {
+                OnStopMoving?.Invoke(this, EventArgs.Empty);
+                ActionComplete();
+            }
+        }
     }
 
     public override List<GridPosition> GetValidActionGridPositionList()
@@ -59,6 +57,9 @@ public class MoveAction : BaseAction
                 if (!GameManager.LevelGrid.IsValidGridPosition(testGridPosition)) continue;
                 if (unitGridPosition == testGridPosition) continue;
                 if (GameManager.LevelGrid.HasAnyUnitOnGridPosition(testGridPosition)) continue;
+                if (!GameManager.Pathfinding.IsWalkable(testGridPosition)) continue;
+                if (!GameManager.Pathfinding.HasPath(unitGridPosition, testGridPosition)) continue;
+                if (GameManager.Pathfinding.GetPathLength(unitGridPosition, testGridPosition) > maxMoveDistance * GameManager.Pathfinding.GetMoveStraightCost()) continue;
 
                 validGridPositionList.Add(testGridPosition);
             }
@@ -71,7 +72,16 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        targetPositon = GameManager.LevelGrid.GetWorldPosition(gridPosition);
+        currentPositionIndex = 0;
+        List<GridPosition> pathGridPositionList = GameManager.Pathfinding.FindPath(unit.GetGridPosition(), gridPosition, out int pathLength);
+        positionList = new List<Vector3>();
+
+        foreach (GridPosition pathGridPosition in pathGridPositionList)
+        {
+            positionList.Add(GameManager.LevelGrid.GetWorldPosition(pathGridPosition));
+        }
+
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
 
         ActionStart(onActionComplete);
     }
