@@ -30,41 +30,17 @@ public class CameraController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 inputMoveDir = Vector3.zero;
-        if (Input.GetKey(KeyCode.W))
-        {
-            inputMoveDir.z += 1.0f;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            inputMoveDir.z -= 1.0f;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            inputMoveDir.x -= 1.0f;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            inputMoveDir.x += 1.0f;
-        }
+        Vector2 inputMoveDir = GameManager.InputManager.GetCameraMoveVector();
 
         float moveSpeed = 10.0f;
-        Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
+        Vector3 moveVector = transform.forward * inputMoveDir.y + transform.right * inputMoveDir.x;
         transform.position += moveVector * moveSpeed * Time.deltaTime;
     }
 
     private void HandleRotation()
     {
         Vector3 inputRotationVector = Vector3.zero;
-        if (Input.GetKey(KeyCode.Q))
-        {
-            inputRotationVector.y += 1.0f;
-        }
-        else if (Input.GetKey(KeyCode.E))
-        {
-            inputRotationVector.y -= 1.0f;
-        }
+        inputRotationVector.y = GameManager.InputManager.GetCameraRotateAmount();
 
         float rotationSpeed = 100f;
         transform.Rotate(inputRotationVector * rotationSpeed * Time.deltaTime);
@@ -72,14 +48,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
-        if (Input.mouseScrollDelta.y > 0.0f)
-        {
-            targetFollowOffset.y -= 1.0f;
-        }
-        else if (Input.mouseScrollDelta.y < 0.0f)
-        {
-            targetFollowOffset.y += 1.0f;
-        }
+        float zoomIncreaseAmount = 1.0f;
+        targetFollowOffset.y += GameManager.InputManager.GetCameraZoomAmount() * zoomIncreaseAmount;
 
         float zoomSpeed = 5.0f;
         targetFollowOffset.y = Mathf.Clamp(targetFollowOffset.y, MIN_FOLLOW_Y_OFFSET, MAX_FOLLOW_Y_OFFSET);

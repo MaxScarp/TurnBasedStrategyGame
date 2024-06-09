@@ -660,6 +660,7 @@ MonoBehaviour:
   - {fileID: 8233778147416523220, guid: d19e7be852a6d1149913e46bdbd0a7d6, type: 3}
   - {fileID: 3069180540798264650, guid: 6a4f4e73f8408bb4e93e49810d677e66, type: 3}
   - {fileID: 50724259427665484, guid: 022c5e499c1b960449dc2b2dc715a015, type: 3}
+  - {fileID: 362871223543291377, guid: 51928625819f09e4b88218aa8e71d939, type: 3}
   UIComponentTransformArray:
   - {fileID: 2993944777077932493, guid: 627eddb6e15c5cc40822c071c526e237, type: 3}
   - {fileID: 3701741665206846138, guid: 0aaa1f54298822041adb79c586275a88, type: 3}
@@ -1811,7 +1812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 11, z: -10}
+  m_FollowOffset: {x: 0, y: 11.99998, z: -10}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0

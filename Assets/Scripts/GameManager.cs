@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public static EnemyAI EnemyAI { get; private set; }
     public static UnitManager UnitManager { get; private set; }
     public static Pathfinding Pathfinding { get; private set; }
+    public static InputManager InputManager { get; private set; }
 
     private void Awake()
     {
@@ -91,6 +92,10 @@ public class GameManager : MonoBehaviour
             else if (componentTransformInstance.TryGetComponent(out Pathfinding pathfinding))
             {
                 Pathfinding = pathfinding;
+            }
+            else if (componentTransformInstance.TryGetComponent(out InputManager inputManager))
+            {
+                InputManager = inputManager;
             }
         }
     }

@@ -6,7 +6,7 @@ public class MouseWorld : MonoBehaviour
 
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(GameManager.InputManager.GetMouseScreenPosition());
         if (!Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, mousePlaneLayerMask)) return;
 
         transform.position = raycastHit.point;
