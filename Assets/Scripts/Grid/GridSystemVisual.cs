@@ -90,8 +90,17 @@ public class GridSystemVisual : MonoBehaviour
                 break;
             case ShootAction shootAction:
                 gridVisualType = GridVisualType.RED;
-
                 ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.MaxShootDistance, GridVisualType.RED_SOFT);
+                break;
+            case GrenadeAction grenadeAction:
+                gridVisualType = GridVisualType.YELLOW;
+                break;
+            case SwordAction swordAction:
+                gridVisualType = GridVisualType.RED;
+                ShowGridPositionRangeSquare(selectedUnit.GetGridPosition(), swordAction.MaxSwordDistance, GridVisualType.RED_SOFT);
+                break;
+            case InteractAction interactAction:
+                gridVisualType = GridVisualType.BLUE;
                 break;
         }
 
@@ -109,6 +118,24 @@ public class GridSystemVisual : MonoBehaviour
 
         Debug.LogError($"Error: Trying to find {typeof(GridVisualTypeMaterial)} for {gridVisualType}");
         return null;
+    }
+
+    private void ShowGridPositionRangeSquare(GridPosition gridPosition, int range, GridVisualType gridVisualType)
+    {
+        List<GridPosition> gridPositionList = new List<GridPosition>();
+
+        for (int x = -range; x <= range; x++)
+        {
+            for (int z = -range; z <= range; z++)
+            {
+                GridPosition testGridPosition = gridPosition + new GridPosition(x, z);
+                if (!GameManager.LevelGrid.IsValidGridPosition(testGridPosition)) continue;
+
+                gridPositionList.Add(testGridPosition);
+            }
+        }
+
+        ShowGridPositionList(gridPositionList, gridVisualType);
     }
 
     private void ShowGridPositionRange(GridPosition gridPosition, int range, GridVisualType gridVisualType)

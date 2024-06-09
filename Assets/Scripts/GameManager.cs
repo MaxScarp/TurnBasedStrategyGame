@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviour
             {
                 MouseWorld = mouseWorld;
             }
-            else if (componentTransformInstance.TryGetComponent(out UnitActionSystem unitActionSystem))
-            {
-                UnitActionSystem = unitActionSystem;
-            }
             else if (componentTransformInstance.TryGetComponent(out LevelGrid levelGrid))
             {
                 LevelGrid = levelGrid;
+            }
+            else if (componentTransformInstance.TryGetComponent(out UnitActionSystem unitActionSystem))
+            {
+                UnitActionSystem = unitActionSystem;
             }
             else if (componentTransformInstance.TryGetComponent(out CameraController cameraController))
             {

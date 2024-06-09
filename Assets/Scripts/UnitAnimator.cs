@@ -5,37 +5,48 @@ public class UnitAnimator : MonoBehaviour
 {
     private const string IS_WALKING = "IsWalking";
     private const string SHOOT = "Shoot";
+    private const string SWORD = "SwordSlash";
 
     [SerializeField] private Animator animator;
     [SerializeField] private Transform bulletProjectilePrefab;
     [SerializeField] private Transform shootPointTransform;
-
-    private MoveAction moveAction;
-    private ShootAction shootAction;
+    [SerializeField] private Transform rifleTransform;
+    [SerializeField] private Transform swordTransform;
 
     private void Awake()
     {
-        if (!TryGetComponent(out MoveAction moveAction))
+        if (TryGetComponent(out MoveAction moveAction))
         {
-            Debug.LogError($"Error: trying to get the component of type {typeof(MoveAction)}! - {this.name}.");
-            return;
+            moveAction.OnStartMoving += MoveAction_OnStartMoving;
+            moveAction.OnStopMoving += MoveAction_OnStopMoving;
         }
-        this.moveAction = moveAction;
 
-        if (!TryGetComponent(out ShootAction shootAction))
+        if (TryGetComponent(out ShootAction shootAction))
         {
-            Debug.LogError($"Error: trying to get the component of type {typeof(ShootAction)}! - {this.name}.");
-            return;
+            shootAction.OnShoot += ShootAction_OnShoot;
         }
-        this.shootAction = shootAction;
+
+        if (TryGetComponent(out SwordAction swordAction))
+        {
+            swordAction.OnSwordActionStarted += SwordAction_OnSwordActionStarted;
+            swordAction.OnSwordActionCompleted += SwordAction_OnSwordActionCompleted;
+        }
     }
 
     private void Start()
     {
-        moveAction.OnStartMoving += MoveAction_OnStartMoving;
-        moveAction.OnStopMoving += MoveAction_OnStopMoving;
+        EquipRifle();
+    }
 
-        shootAction.OnShoot += ShootAction_OnShoot;
+    private void SwordAction_OnSwordActionCompleted(object sender, EventArgs e)
+    {
+        EquipRifle();
+    }
+
+    private void SwordAction_OnSwordActionStarted(object sender, EventArgs e)
+    {
+        EquipSword();
+        animator.SetTrigger(SWORD);
     }
 
     private void ShootAction_OnShoot(object sender, ShootAction.OnShootEventArgs e)
@@ -65,11 +76,15 @@ public class UnitAnimator : MonoBehaviour
         animator.SetBool(IS_WALKING, true);
     }
 
-    private void OnDestroy()
+    private void EquipSword()
     {
-        moveAction.OnStartMoving -= MoveAction_OnStartMoving;
-        moveAction.OnStopMoving -= MoveAction_OnStopMoving;
+        swordTransform.gameObject.SetActive(true);
+        rifleTransform.gameObject.SetActive(false);
+    }
 
-        shootAction.OnShoot -= ShootAction_OnShoot;
+    private void EquipRifle()
+    {
+        swordTransform.gameObject.SetActive(false);
+        rifleTransform.gameObject.SetActive(true);
     }
 }

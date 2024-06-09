@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class Pathfinding : MonoBehaviour
 {
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
+
+    public event EventHandler OnPathfindingSetted;
 
     [SerializeField] private Transform gridDebugObjectPrefab;
     [SerializeField] private LayerMask obstacleLayerMask;
@@ -37,6 +40,8 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+
+        OnPathfindingSetted?.Invoke(this, EventArgs.Empty);
     }
 
     public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition, out int pathLength)
@@ -203,6 +208,10 @@ public class Pathfinding : MonoBehaviour
     public int GetMoveStraightCost() => MOVE_STRAIGHT_COST;
 
     public bool IsWalkable(GridPosition gridPosition) => gridSystem.GetGridObject(gridPosition).IsWalkable;
+    public void SetIsWalkable(GridPosition gridPosition, bool isWalkable)
+    {
+        gridSystem.GetGridObject(gridPosition).IsWalkable = isWalkable;
+    }
 
     public bool HasPath(GridPosition startGridPosition, GridPosition endGridPosition) => FindPath(startGridPosition, endGridPosition, out int pathLength) != null;
 
